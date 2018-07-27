@@ -51,7 +51,9 @@ if (isset($_POST['submit'])) {
 		$error = "That extension is not allowed.";
 	} else {
 		// Hashing the password here prior to insert
-		$password = md5($password);
+		//$password = md5($password);
+		/* Hashing the password with password_hash as opposed to above after reading that it is not that secure for large tables. */
+		$password = password_hash($password, PASSWORD_DEFAULT);
 		/* Renaming the image here with multiple rand() functions, the time() function and then appending a "." and whatever the image extension was from the extraction above */
 		$image_name  = rand(0, 100000).rand(0, 100000).rand(0, 100000).time().".".$image_ext;
 		$insertQuery = "INSERT INTO users(first_name, last_name, email, password, image, date_registered) VALUES('$first_name', '$last_name', '$email', '$password', '$image_name', '$date');";
@@ -76,8 +78,11 @@ if (isset($_POST['submit'])) {
 <body>
 	<div id="error"><?php echo $error;?></div>
 	<div id="wrapper">
+		<div id="menu">
+			<a href="login.php">Login</a>
+		</div>
 		<div id="formDiv">
-			<form action="index.php" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
+			<form action="signup.php" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
 				<label>First Name</label><br/>
 				<input type="text" name="first_name"><br/>
 				<label>Last Name</label><br/>
