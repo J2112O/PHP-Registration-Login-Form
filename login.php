@@ -1,10 +1,26 @@
 <?php
+include 'functions.php';
 /*checking that the button is clicked*/
 $error = "";// Variable to report any errors.
 if (isset($_POST['submit'])) {
 	include 'connect.php';//Db $con variable coming from here.
 	$email    = mysqli_real_escape_string($con, $_POST['email']);
 	$password = mysqli_real_escape_string($con, $_POST['password']);
+	if (emailExists($email, $con)) {
+		//$error = "Email Exists";
+		$password_query   = "SELECT password FROM users WHERE email = '$email'";
+		$result           = mysqli_query($con, $password_query);
+		$retrieved_result = mysqli_fetch_assoc($result);
+		/*The 1st param is the password from the $_POST superglobal and the 2nd is the one retrieved from the DB.*/
+		if (password_verify($password, $retrieved_result['password'])) {
+			$error = "Matched and logged in.";
+		} else {
+			$error = "Issue with that password.";
+		}
+
+	} else {
+		$error = "Email Does Not Exists.";
+	}
 
 }
 ?>
