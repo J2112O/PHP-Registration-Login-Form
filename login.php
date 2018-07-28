@@ -7,16 +7,19 @@ if (isset($_POST['submit'])) {
 	$email    = mysqli_real_escape_string($con, $_POST['email']);
 	$password = mysqli_real_escape_string($con, $_POST['password']);
 	if (emailExists($email, $con)) {
-		//$error = "Email Exists";
+		$error = "Email Exists";
+		/*
 		$password_query   = "SELECT password FROM users WHERE email = '$email'";
 		$result           = mysqli_query($con, $password_query);
 		$retrieved_result = mysqli_fetch_assoc($result);
-		/*The 1st param is the password from the $_POST superglobal and the 2nd is the one retrieved from the DB.*/
-		if (password_verify($password, $retrieved_result['password'])) {
-			$error = "Matched and logged in.";
-		} else {
-			$error = "Issue with that password.";
-		}
+		/*The 1st param is the password from the $_POST superglobal, the 2nd is the variable retrieved from the DB.*/
+		/*
+	if (password_verify($password, $retrieved_result['password'])) {
+	$error = "Matched and logged in.";
+	} else {
+	$error = "Issue with that password.";
+	}
+	 */
 
 	} else {
 		$error = "Email Does Not Exists.";
