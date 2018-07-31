@@ -1,4 +1,5 @@
 <?php
+session_start();
 /*checking that the button is clicked*/
 if (isset($_POST['submit'])) {
 	include 'connect.php';//Db $con variable coming from here.
