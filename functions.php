@@ -29,12 +29,13 @@ function verifyPassword($password, $email, $con) {
 		mysqli_stmt_execute($stmt);
 		$retrieved_result = mysqli_stmt_get_result($stmt);
 		/*The 1st param is the password from the $_POST superglobal, the 2nd is the variable retrieved from the DB.*/
-		if (password_verify($password, $retrieved_result['password'])) {
-			$error = "Matched and logged in.";
+		if (mysqli_num_rows($retrieved_result) == 1 && password_verify($password, $retrieved_result['password'])) {
+			return true;
+			//$error = "Matched and logged in.";
 		} else {
-			$error = "Issue with that password.";
+			return false;
+			//$error = "Issue with that password.";
 		}
 		//$result           = mysqli_query($con, $password_query);
-
 	}
 }

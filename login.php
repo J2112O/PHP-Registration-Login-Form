@@ -7,9 +7,11 @@ if (isset($_POST['submit'])) {
 	$email    = mysqli_real_escape_string($con, $_POST['email']);
 	$password = mysqli_real_escape_string($con, $_POST['password']);
 	if (emailExists($email, $con)) {
-		$error = "Email Exists";
+		$error = "Email Exists.";
+	}if (verifyPassword($password, $email, $con)) {
+		$error = "Password Exists.";
 	} else {
-		$error = "Email Does Not Exists.";
+		$error = "Email or Password Incorrect.";
 	}
 }
 
